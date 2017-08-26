@@ -8,7 +8,7 @@
   <body>
     <div class="jumbotron">
       <h1 class="display-3">Juros Composto!</h1>
-      <p class="lead">Simples .</p>
+      <p class="lead">Simples projeto de calculo de juros composto.</p>
       <hr class="my-4">
       <div class="container">
         <div class="form-group">
@@ -48,6 +48,12 @@
             <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
           </div>
         </div>
+        <div class="form-group row" style="display: none">
+          <label for="resultado" class="col-sm-2 col-form-label">Resultado: </label>
+          <div class="col-sm-10">
+            <input class="form-control" id="resultado" disabled="true">
+          </div>
+        </div>
       </div>
     </div>
     <script type="text/javascript">
@@ -57,6 +63,13 @@
             var tipo = $(this).val();
             if (tipo == "montante") {
               $("#montante").parent().parent().hide();
+              $("#tempo, #valor, #porcentagem").parent().parent().show();
+            }else if (tipo == "tempo"){
+              $("#tempo").parent().parent().hide();
+              $("#montante, #valor, #porcentagem").parent().parent().show();
+            } else if (tipo == "juros"){
+              $("#porcentagem").parent().parent().hide();
+              $("#montante, #tempo, #valor").parent().parent().show();
             }
           });
           $("#calcular").click(function(event) {
@@ -65,19 +78,22 @@
           });
           $("#tipo_calculo").trigger('change');
         },
-        calcularJurosComposto: function(){
+        calcularJurosComposto: function(tipo){
+          var tempo  = parseInt($("#tempo").val());
+          var porcentagem = parseFloat($("#porcentagem").val());
+          var valor = parseInt($("#valor").val());
+          var montante = parseFloat($("#montante").val());
+          var resultado = 0;
           if (tipo == "montante") {
-            var tempo  = parseInt($("#tempo").val());
-            var porcentagem = parseFloat($("#porcentagem").val());
-            var valor = parseInt($("#valor").val());
             // M = P(1+i)^n
-            var resultado = valor * Math.pow(1+porcentagem, tempo);
-            console.log(resultado);
+            resultado = valor * Math.pow(1+porcentagem, tempo);
           } else if (tipo == "tempo"){
-
+            resultado = montante/ Math.pow(1+porcentagem, tempo)
           } else if (tipo == "juros"){
-
+            resultado = Math.sqrt(montante/valor) -1
           }
+          $("#resultado").parent().parent().show();
+          $("#resultado").val(resultado);
         }
       };
       CalcularJurosIndexView.inicializar();
