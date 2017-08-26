@@ -1,1 +1,87 @@
 Hello World
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Juros Composto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-3">Juros Composto!</h1>
+      <p class="lead">Simples .</p>
+      <hr class="my-4">
+      <div class="container">
+        <div class="form-group">
+          <label for="tipo_calculo" class="col-sm-2 col-form-label">Tipo de calculo:</label>
+          <select id="tipo_calculo">
+            <option value="montante">Montante</option>
+            <option value="tempo">Tempo</option>
+            <option value="juros">Juros</option>
+          </select>
+        </div>
+        <div class="form-group row">
+          <label for="montante" class="col-sm-2 col-form-label">M</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="montante" placeholder="Montante">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="tempo" class="col-sm-2 col-form-label">n</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="tempo" placeholder="Tempo">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="porcentagem" class="col-sm-2 col-form-label">i</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="porcentagem" placeholder="Porcentagem">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="valor" class="col-sm-2 col-form-label">P</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="valor" placeholder="Valor">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var CalcularJurosIndexView = {
+        inicializar(){
+          $("#tipo_calculo").change(function(event) {
+            var tipo = $(this).val();
+            if (tipo == "montante") {
+              $("#montante").parent().parent().hide();
+            }
+          });
+          $("#calcular").click(function(event) {
+            var tipo = $("#tipo_calculo").val();
+            CalcularJurosIndexView.calcularJurosComposto(tipo);
+          });
+          $("#tipo_calculo").trigger('change');
+        },
+        calcularJurosComposto: function(){
+          if (tipo == "montante") {
+            var tempo  = parseInt($("#tempo").val());
+            var porcentagem = parseFloat($("#porcentagem").val());
+            var valor = parseInt($("#valor").val());
+            // M = P(1+i)^n
+            var resultado = valor * Math.pow(1+porcentagem, tempo);
+            console.log(resultado);
+          } else if (tipo == "tempo"){
+
+          } else if (tipo == "juros"){
+
+          }
+        }
+      };
+      CalcularJurosIndexView.inicializar();
+    </script>
+  </body>
+</html>
