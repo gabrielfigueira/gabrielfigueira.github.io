@@ -5,57 +5,67 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   </head>
+  <style>
+    #footer {
+      position:fixed;
+      width: 100%;
+      text-align: center;
+         bottom:0px;
+      margin-bottom: 0px;
+    }
+
+  </style>
   <body>
     <div class="jumbotron">
       <h1 class="display-3">Juros Composto!</h1>
       <p class="lead">Simples projeto de calculo de juros composto.</p>
-      <hr class="my-4">
-      <div class="container">
-        <div class="form-group">
-          <label for="tipo_calculo" class="col-sm-2 col-form-label">Tipo de calculo:</label>
-          <select id="tipo_calculo">
-            <option value="montante">Montante</option>
-            <option value="tempo">Tempo</option>
-            <option value="juros">Juros</option>
-          </select>
+    </div>
+    <div class="container">
+      <div class="form-group">
+        <label for="tipo_calculo" class="col-sm-2 col-form-label">Tipo de calculo:</label>
+        <select id="tipo_calculo">
+          <option value="montante">Montante</option>
+          <option value="tempo">Tempo</option>
+          <option value="juros">Juros</option>
+        </select>
+      </div>
+      <div class="form-group row">
+        <label for="montante" class="col-sm-2 col-form-label">M</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="montante" placeholder="Montante">
         </div>
-        <div class="form-group row">
-          <label for="montante" class="col-sm-2 col-form-label">M</label>
-          <div class="col-sm-10">
-            <input class="form-control" id="montante" placeholder="Montante">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="tempo" class="col-sm-2 col-form-label">n</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="tempo" placeholder="Tempo">
         </div>
-        <div class="form-group row">
-          <label for="tempo" class="col-sm-2 col-form-label">n</label>
-          <div class="col-sm-10">
-            <input class="form-control" id="tempo" placeholder="Tempo">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="porcentagem" class="col-sm-2 col-form-label">i</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="porcentagem" placeholder="Porcentagem">
         </div>
-        <div class="form-group row">
-          <label for="porcentagem" class="col-sm-2 col-form-label">i</label>
-          <div class="col-sm-10">
-            <input class="form-control" id="porcentagem" placeholder="Porcentagem">
-          </div>
+      </div>
+      <div class="form-group row">
+        <label for="valor" class="col-sm-2 col-form-label">P</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="valor" placeholder="Valor">
         </div>
-        <div class="form-group row">
-          <label for="valor" class="col-sm-2 col-form-label">P</label>
-          <div class="col-sm-10">
-            <input class="form-control" id="valor" placeholder="Valor">
-          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
         </div>
-        <div class="form-group row">
-          <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary" id="calcular">Calcular</button>
-          </div>
-        </div>
-        <div class="form-group row" style="display: none">
-          <label for="resultado" class="col-sm-2 col-form-label">Resultado: </label>
-          <div class="col-sm-10">
-            <input class="form-control" id="resultado" disabled="true">
-          </div>
+      </div>
+      <div class="form-group row" style="display: none">
+        <label for="resultado" class="col-sm-2 col-form-label">Resultado: </label>
+        <div class="col-sm-10">
+          <input class="form-control" id="resultado" disabled="true">
         </div>
       </div>
     </div>
+    <footer id="footer"><a href="mailto:contato@gabrielfigueira.com.br" class="btn btn-link">contato@gabrielfigueira.com.br</a></footer>
     <script type="text/javascript">
       var CalcularJurosIndexView = {
         inicializar(){
@@ -74,6 +84,22 @@
           });
           $("#calcular").click(function(event) {
             var tipo = $("#tipo_calculo").val();
+            if (tipo == "montante") {
+              if($("#valor").val() == "" || $("#valor").val() == null || $("#tempo").val() == "" || $("#tempo").val() == null || $("#porcentagem").val() == "" || $("#porcentagem").val() == null){
+                alert("Prencha todos os campos");
+                return false;
+              }
+            }else if (tipo == "tempo"){
+              if($("#montante").val() == "" || $("#montante").val() == null || $("#valor").val() == "" || $("#valor").val() == null || $("#porcentagem").val() == "" || $("#porcentagem").val() == null ){
+                alert("Prencha todos os campos");
+                return false;
+              }
+            } else if (tipo == "juros"){
+              if($("#montante").val() == "" || $("#montante").val() == null || $("#tempo").val() == "" || $("#tempo").val() == null ||  $("#valor").val() == "" || $("#valor").val() == null){
+                alert("Prencha todos os campos");
+                return false;
+              }
+            }
             CalcularJurosIndexView.calcularJurosComposto(tipo);
           });
           $("#tipo_calculo").trigger('change');
